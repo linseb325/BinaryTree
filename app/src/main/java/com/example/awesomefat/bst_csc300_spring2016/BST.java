@@ -14,6 +14,27 @@ public class BST
         this.root = null;
     }
 
+    public boolean isOutOfBalance()
+    {
+        //boolean-exp?true-stmt:false-stmt
+        return this.root.isOutOfBalance();
+    }
+
+    public void howAreWeOutOfBalance(char val)
+    {
+        //where are we out of balance initially? left or right?
+        String outOfBalanceInitial = "right";
+        if(val <= this.root.getPayload())
+        {
+            outOfBalanceInitial = "left";
+        }
+
+        //where are we out of balance secondarily? left or right?
+        String outOfBalanceSecondarily = this.root.outOfBalanceSecondarily(val);
+
+        //Finaly print out how we are out of balance
+    }
+
     public void add(char payload)
     {
         if(this.root == null)
@@ -47,13 +68,24 @@ public class BST
                 while(!childStack.isEmpty())
                 {
                     //push the left and right children of peek childStack onto tempStack
+                    if(childStack.peek().getLeftTree() != null)
+                    {
+                        tempStack.push(childStack.peek().getLeftTree());
+                    }
+                    if(childStack.peek().getRightTree() != null)
+                    {
+                        tempStack.push(childStack.peek().getRightTree());
+                    }
+
                     //pop from childStack and push onto contentStack
+                    contentStack.push(childStack.pop());
                 }
 
                 //move contents of tempStack onto childStack in REVERSE
                 while(!tempStack.isEmpty())
                 {
                     //pop -> push onto childStack
+                    childStack.push(tempStack.pop());
                 }
             }
 
@@ -62,13 +94,17 @@ public class BST
             while(!contentStack.isEmpty())
             {
                 //pop -> push onto answerStack
+                answerStack.push(contentStack.pop());
             }
 
             //our final answer is answerStack, we can visit the nodes in pop order
+            String answer = "";
             while(!answerStack.isEmpty())
             {
                 //pop and display value
+                answer += answerStack.pop().getPayload() + "\t";
             }
+            System.out.println(answer);
         }
     }
 

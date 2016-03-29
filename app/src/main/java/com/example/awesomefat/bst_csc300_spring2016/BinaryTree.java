@@ -16,6 +16,34 @@ public class BinaryTree
         this.rightTree = null;
     }
 
+    public boolean isOutOfBalance()
+    {
+        int leftDepth = this.leftTree == null?0:this.leftTree.depth();
+        int rightDepth = this.rightTree == null?0:this.rightTree.depth();
+        return Math.abs(leftDepth-rightDepth) > 1;
+    }
+
+    public String outOfBalanceSecondarily(char val)
+    {
+        //are we looking at a matching payload and are we a leaf node
+        if(this.payload == val && this.leftTree == null)
+        {
+            //return the last turn we made
+            //HOW DO WE KNOW WHAT WAS THE LAST TURN?
+        }
+        else
+        {
+            //keep traversing the tree and ultimately return left or right
+        }
+    }
+
+    public int depth()
+    {
+        //boolean-exp?true-stmt:false-stmt
+        return 1 + Math.max((this.leftTree == null?0:this.leftTree.depth()),
+                (this.rightTree == null?0:this.rightTree.depth()));
+    }
+
     public void add(char payload)
     {
         if(payload <= this.payload)
