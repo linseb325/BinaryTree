@@ -23,17 +23,30 @@ public class BinaryTree
         return Math.abs(leftDepth-rightDepth) > 1;
     }
 
-    public String outOfBalanceSecondarily(char val)
+    public String outOfBalanceSecondarily(char val, String lastTurn)
     {
         //are we looking at a matching payload and are we a leaf node
         if(this.payload == val && this.leftTree == null)
         {
+            //we are looking at THE last tree added
             //return the last turn we made
-            //HOW DO WE KNOW WHAT WAS THE LAST TURN?
+            return lastTurn;
         }
         else
         {
+            //I might have a payload that matches val, or I am still looking for a matching payload
+            //in either case, I am not at THE last leaf added.
+
             //keep traversing the tree and ultimately return left or right
+            if(val <= this.payload)
+            {
+                //we would have added it to the left
+                return this.leftTree.outOfBalanceSecondarily(val, "left");
+            }
+            else
+            {
+                return this.rightTree.outOfBalanceSecondarily(val, "right");
+            }
         }
     }
 
