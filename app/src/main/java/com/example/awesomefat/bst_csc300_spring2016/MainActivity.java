@@ -15,14 +15,19 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         BST tree = new BST();
-        String vals = "fbggg";
+        String vals = "gfa";
         for(int i = 0; i < vals.length(); i++)
         {
             tree.add(vals.charAt(i));
         }
 
+        if(tree.isOutOfBalance())
+        {
+            System.out.println("Out of balance: " + tree.isOutOfBalance());
+            tree.howAreWeOutOfBalance('a');
+        }
+        tree.rebalance();
         System.out.println("Out of balance: " + tree.isOutOfBalance());
-        tree.howAreWeOutOfBalance('g');
         //tree.visitPreOrder();
         //tree.visitPostOrder();
         //tree.visitInOrder();

@@ -16,6 +16,16 @@ public class BinaryTree
         this.rightTree = null;
     }
 
+    public void setLeftTree(BinaryTree leftTree)
+    {
+        this.leftTree = leftTree;
+    }
+
+    public void setRightTree(BinaryTree rightTree)
+    {
+        this.rightTree = rightTree;
+    }
+
     public boolean isOutOfBalance()
     {
         int leftDepth = this.leftTree == null?0:this.leftTree.depth();
@@ -57,13 +67,43 @@ public class BinaryTree
                 (this.rightTree == null?0:this.rightTree.depth()));
     }
 
+    public void add(BinaryTree tree)
+    {
+        if(tree.payload <= this.payload)
+        {
+            if(this.leftTree == null)
+            {
+                this.leftTree = tree;
+            }
+            else
+            {
+                this.leftTree.add(tree);
+            }
+        }
+        else
+        {
+            if(this.rightTree == null)
+            {
+                this.rightTree = tree;
+            }
+            else
+            {
+                this.rightTree.add(tree);
+            }
+        }
+    }
+
     public void add(char payload)
     {
+        BSTCore.grandParent = BSTCore.parent;
+        BSTCore.parent = BSTCore.pivot;
+        BSTCore.pivot = this;
         if(payload <= this.payload)
         {
             if(this.leftTree == null)
             {
                 this.leftTree = new BinaryTree(payload);
+                BSTCore.culprit = this.leftTree;
             }
             else
             {
@@ -75,6 +115,7 @@ public class BinaryTree
             if(this.rightTree == null)
             {
                 this.rightTree = new BinaryTree(payload);
+                BSTCore.culprit = this.rightTree;
             }
             else
             {
