@@ -34,22 +34,50 @@ public class BST
         String outOfBalanceSecondarily = this.root.outOfBalanceSecondarily(val, "DEFAULT TURN");
 
         //Finaly print out how we are out of balance
+        BSTCore.howOutOfBalance = outOfBalanceInitial + " - " + outOfBalanceSecondarily;
         System.out.println("Out of balance: " + outOfBalanceInitial + " - " + outOfBalanceSecondarily);
     }
 
     public void rebalance()
     {
+
+        //if the tree is already balanced, there's no need to rebalance
+        if(BSTCore.howOutOfBalance == null)
+        {
+            System.out.println("Already balanced!");
+        }
+
         //assuming we are out of balance left-left
-        if(BSTCore.grandParent != null)
+        else if(BSTCore.howOutOfBalance == "left - left")
         {
-            BSTCore.grandParent.setLeftTree(BSTCore.pivot);
+            if(BSTCore.grandParent != null)
+            {
+                BSTCore.grandParent.setLeftTree(BSTCore.pivot);
+            }
+            else
+            {
+                BSTCore.theTree.root = BSTCore.pivot;
+            }
+            BSTCore.parent.setLeftTree(null);
+            BSTCore.pivot.add(BSTCore.parent);
+            BSTCore.howOutOfBalance = null;
         }
-        else
+
+        //right-right case
+        else if(BSTCore.howOutOfBalance == "right - right")
         {
-            BSTCore.theTree.root = BSTCore.pivot;
+            if(BSTCore.grandParent != null)
+            {
+                BSTCore.grandParent.setRightTree(BSTCore.pivot);
+            }
+            else
+            {
+                BSTCore.theTree.root = BSTCore.pivot;
+            }
+            BSTCore.parent.setRightTree(null);
+            BSTCore.pivot.add(BSTCore.parent);
+            BSTCore.howOutOfBalance = null;
         }
-        BSTCore.parent.setLeftTree(null);
-        BSTCore.pivot.add(BSTCore.parent);
     }
 
     public void add(char payload)
